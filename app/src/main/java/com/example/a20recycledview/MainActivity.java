@@ -33,20 +33,12 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        //Instancio la lista (DEBERIA ESTAR EN OTRA CLASE)
-        nameList = new ArrayList<>();
-
-        //Añado elementos a la lista
-        nameList.add("China");
-        nameList.add("France");
-        nameList.add("Germany");
-        nameList.add("India");
-        nameList.add("Russia");
-        nameList.add("United Kingdom");
-        nameList.add("United States");
+        PaisRepository paisRepository = new PaisRepository();
+        nameList = paisRepository.obtenerListaPaises();
 
         //Instancio el recycler
         recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
 
         //Esto hace que el recyclerView sepa que los elementos van a tener un tamaño fijo uno debajo del otro
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
