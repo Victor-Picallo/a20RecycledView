@@ -36,17 +36,40 @@ public class MiAdaptador extends RecyclerView.Adapter<MiAdaptador.ViewHolder> {
         final String name = nameList.get(position);
         //Setea el texto del textview en el interior del elementito.xml
         holder.textView.setText(name);
+        //Necesito dotar a este elemento enlazado de un evento click
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Elimino el elemento de la posicion "position"
+                eliminarElemento(holder.getAdapterPosition());
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
-       if(nameList == null) {
-           return 0;
-         } else {
-              return nameList.size();
-       }
+        if (nameList == null) {
+            return 0;
+        } else {
+            return nameList.size();
+        }
     }
+
+    //Metodo para eliminar elementos visuales de la lista
+    public void eliminarElemento(int position) {
+        nameList.remove(position);
+        //Falla la actualizacion de lista usemos mejor norifiDataSetChanged()
+        //Funciona la retirada visual del elemento
+        notifyItemRemoved(position);
+    }
+
+    //Metodo para anadir un elemento visual a la lista
+    public void anadirElemento(String name) {
+        nameList.add(name);
+        notifyItemInserted(nameList.size()-1);
+    }
+
 
     //Tengo que crear una INNER CLASS para manipular el soporte visual (ViewHolder)
     public class ViewHolder extends RecyclerView.ViewHolder {

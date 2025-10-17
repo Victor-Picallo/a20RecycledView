@@ -1,6 +1,9 @@
 package com.example.a20recycledview;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     //Adaptador para cargar las cadenas en el recycler
     MiAdaptador miAdaptador;
+    //Cuadro de texto para anadir el pais
+    EditText editTextText;
+    //Boton para anadir
+    Button buttonAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,5 +56,24 @@ public class MainActivity extends AppCompatActivity {
         miAdaptador = new MiAdaptador(nameList);
         //Asigno el adaptador al recycler
         recyclerView.setAdapter(miAdaptador);
+
+        //Instancio el editText y el boton
+        editTextText = findViewById(R.id.editTextText);
+        buttonAdd = findViewById(R.id.button);
+
+        //Asigno el evento click al boton
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nuevoPais = editTextText.getText().toString().trim();
+                if (!nuevoPais.isEmpty()) {
+                    miAdaptador.anadirElemento(nuevoPais);
+                    recyclerView.scrollToPosition(nameList.size() - 1);
+                    editTextText.setText("");
+                }
+            }
+        });
+
+
     }
 }
